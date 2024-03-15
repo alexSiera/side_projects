@@ -36,3 +36,7 @@ yarn-error.log*
 next-env.d.ts
 
 .DS_Store
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
