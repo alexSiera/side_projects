@@ -27,7 +27,7 @@ const formSchema = z.object({
 });
 
 export const DescriptionForm = ({
-  initialData: description,
+  initialData: initialDescription,
   courseId,
 }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +38,7 @@ export const DescriptionForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { description: description || "" },
+    defaultValues: { description: initialDescription || "" },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -101,10 +101,10 @@ export const DescriptionForm = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !description && "text-slate-500 italic"
+            !initialDescription && "text-slate-500 italic"
           )}
         >
-          {description || "No description"}
+          {initialDescription || "No description"}
         </p>
       )}
     </div>

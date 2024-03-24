@@ -26,7 +26,7 @@ const formSchema = z.object({
 });
 
 export const TitleForm = ({
-  initialData: title,
+  initialData: initialTitle,
   courseId,
 }: TitlePropsProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +37,7 @@ export const TitleForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { title },
+    defaultValues: { title: initialTitle },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -97,7 +97,7 @@ export const TitleForm = ({
           </form>
         </Form>
       ) : (
-        <p className="text-sm mt-2">{title}</p>
+        <p className="text-sm mt-2">{initialTitle}</p>
       )}
     </div>
   );
