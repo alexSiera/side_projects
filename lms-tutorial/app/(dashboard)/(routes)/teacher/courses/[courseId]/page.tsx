@@ -1,7 +1,7 @@
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, ListChecks } from "lucide-react";
 import { redirect } from "next/navigation";
 
 import { TitleForm } from "./_components/TitleForm";
@@ -77,6 +77,14 @@ const CourseIdPage = async ({
             courseId={course.id}
             options={categoriesOptions}
           />
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListChecks} />
+              <h2>Course chapters</h2>
+            </div>
+          </div>
         </div>
       </div>
     </div>
