@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 
 const UploadButton = () => {
@@ -21,7 +21,10 @@ const UploadButton = () => {
       <DialogTrigger asChild onClick={handleOpenUploadModal}>
         <Button>Upload PDF</Button>
       </DialogTrigger>
-      <DialogContent>example contentß</DialogContent>
+      <DialogContent>
+        <DialogTitle>Upload file please</DialogTitle>
+        example contentß
+      </DialogContent>
     </Dialog>
   );
 };
