@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 
+import "react-loading-skeleton/dist/skeleton.css";
+
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -20,12 +22,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
+    <html lang='en' className='light'>
       <Providers>
         <body
           className={cn(
             inter.className,
-            "min-h-screen font-sans antialiased grainy"
+            "grainy min-h-screen font-sans antialiased",
           )}
         >
           <Navbar />
