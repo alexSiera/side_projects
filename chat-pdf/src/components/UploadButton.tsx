@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
+import UploadDropzone from "./UploadDropzone";
 
 const UploadButton = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,7 @@ const UploadButton = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Upload file please</DialogTitle>
-        example contentß
+        <UploadDropzone />
       </DialogContent>
     </Dialog>
   );
