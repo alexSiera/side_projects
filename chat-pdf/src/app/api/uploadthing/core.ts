@@ -4,7 +4,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 const f = createUploadthing();
 
 export const ourFileRouter = {
-  imageUploader: f({
+  pdfUploader: f({
     image: {
       maxFileSize: "4MB",
       maxFileCount: 1,
@@ -17,6 +17,8 @@ export const ourFileRouter = {
       if (!user || !user?.id) {
         throw new Error("Unathorized");
       }
+
+      return { userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {}),
 } satisfies FileRouter;

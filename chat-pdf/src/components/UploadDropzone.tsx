@@ -3,10 +3,12 @@ import { useState } from "react";
 import Dropzone from "react-dropzone";
 
 import { Progress } from "./ui/progress";
+import { useUploadThing } from "@/lib/uploadthing";
 
 const UploadDropzone = () => {
   const [isUploading, setIsUploading] = useState<boolean | null>(true);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const {} = useUploadThing("");
 
   const startSimulatedProgress = () => {
     setUploadProgress(0);
@@ -34,9 +36,6 @@ const UploadDropzone = () => {
         const progressInterval = startSimulatedProgress();
 
         // handle file uploading
-        await new Promise((resolve) => {
-          setTimeout(resolve, 10000);
-        });
         clearInterval(progressInterval);
         setUploadProgress(100);
       }}
