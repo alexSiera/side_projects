@@ -1,17 +1,28 @@
-import { Cloud, File } from "lucide-react";
+import { Cloud, File, Loader2 } from "lucide-react";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
 
 import { Progress } from "./ui/progress";
 import { useUploadThing } from "@/lib/uploadthing";
 import { useToast } from "@/hooks/use-toast";
+import { trpc } from "@/app/_trpc/client";
+import { useRouter } from "next/navigation";
 
 const UploadDropzone = () => {
-  const [isUploading, setIsUploading] = useState<boolean | null>(true);
+  const router = useRouter();
+  const [isUploading, setIsUploading] = useState<boolean | null>(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { toast } = useToast();
 
   const { startUpload } = useUploadThing("pdfUploader");
+
+  const { mutate: startPolling } = trpc.getFile.useMutation({
+    onSuccess: (file) => {
+      router.push(`/dashboard/${file.id}`);
+    },
+    retry: true,
+    retryDelay: 500,
+  });
 
   const startSimulatedProgress = () => {
     setUploadProgress(0);
@@ -33,7 +44,6 @@ const UploadDropzone = () => {
     <Dropzone
       multiple={false}
       onDrop={async (acceptedFile) => {
-        console.log(acceptedFile);
         setIsUploading(true);
 
         const progressInterval = startSimulatedProgress();
@@ -62,6 +72,8 @@ const UploadDropzone = () => {
         // handle file uploading
         clearInterval(progressInterval);
         setUploadProgress(100);
+
+        startPolling({ key });
       }}
     >
       {({ getRootProps, getInputProps, acceptedFiles }) => {
@@ -98,9 +110,26 @@ const UploadDropzone = () => {
                     <Progress
                       value={uploadProgress}
                       className='h-1 w-full bg-zinc-200'
+                      indicatorColor={
+                        uploadProgress === 100 ? "bg-green-500" : ""
+                      }
                     />
+                    {uploadProgress === 100 ? (
+                      <div className='flex items-center justify-center gap-1 pt-2 text-center text-sm text-zinc-700'>
+                        <Loader2 className='h-3 w-3 animate-spin' />
+                        Redirecting...
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 ) : null}
+                <input
+                  {...getInputProps()}
+                  type='file'
+                  id='dropzone-file'
+                  className='hidden'
+                />
               </label>
             </div>
           </div>
