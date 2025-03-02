@@ -1,6 +1,8 @@
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { pinecone } from "@/lib/pinecone";
 
 const f = createUploadthing();
 
@@ -31,6 +33,18 @@ export const ourFileRouter = {
           uploadStatus: "PROCESSING",
         },
       });
+      try {
+        const response = await fetch(`${file.ufsUrl}`);
+        const blob = await response.blob();
+        const loader = new PDFLoader();
+
+        const pageLevelDocs = await loader.load();
+
+        const pagesAmt = pageLevelDocs.length;
+
+        // vectorize and index entire document
+        const pineconeIndex = pinecone.Index("chat-pdf");
+      } catch (error) {}
     }),
 } satisfies FileRouter;
 
