@@ -6,6 +6,7 @@ import Messages from "./Messages";
 import { ChevronLeft, Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
+import { ChatContextProvider } from "./ChatContext";
 
 interface IProps {
   fileId: string;
@@ -80,17 +81,19 @@ const ChatWrapper = ({ fileId }: IProps) => {
           </Link>
         </div>
       </div>
-      <ChatInput disabled />
+      <ChatInput isDisabled />
     </div>;
   }
 
   return (
-    <div className='relative flex min-h-full flex-col justify-between gap-2 divide-zinc-200 bg-zinc-50'>
-      <div className='mb-28 flex flex-1 flex-col justify-between'>
-        <Messages />
+    <ChatContextProvider fileId={fileId}>
+      <div className='relative flex min-h-full flex-col justify-between gap-2 divide-zinc-200 bg-zinc-50'>
+        <div className='mb-28 flex flex-1 flex-col justify-between'>
+          <Messages />
+        </div>
+        <ChatInput />
       </div>
-      <ChatInput />
-    </div>
+    </ChatContextProvider>
   );
 };
 
